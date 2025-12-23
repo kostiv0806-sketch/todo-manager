@@ -59,6 +59,26 @@ def complete_task():
     except ValueError:
         print("❌ Введите число")
 
+def delete_task():
+    """Удаляет задачу"""
+    tasks = load_tasks()
+    if not tasks:
+        print("❌ Нет задач для удаления")
+        return
+    
+    show_tasks()
+    try:
+        num = int(input("\nНомер задачи для удаления: ")) - 1
+        if 0 <= num < len(tasks):
+            deleted = tasks.pop(num)
+            save_tasks(tasks)
+            print(f"✅ Удалено: '{deleted['title']}'")
+        else:
+            print("❌ Неверный номер")
+    except ValueError:
+        print("❌ Введите число")
+
+
 def main():
     """Главное меню"""
     while True:
@@ -66,9 +86,10 @@ def main():
         print("1. Показать задачи")
         print("2. Добавить задачу")
         print("3. Завершить задачу")
-        print("4. Выход")
+        print("4. Удалить задачу")    
+        print("5. Выход")              
         
-        choice = input("Выберите действие (1-4): ").strip()
+        choice = input("Выберите действие (1-5): ").strip()  # ← ИЗМЕНИЛ НА (1-5)
         
         if choice == "1":
             show_tasks()
@@ -76,11 +97,10 @@ def main():
             add_task()
         elif choice == "3":
             complete_task()
-        elif choice == "4":
+        elif choice == "4":            
+            delete_task()
+        elif choice == "5":            
             print("👋 До свидания!")
             break
         else:
             print("❌ Неверный выбор")
-
-if __name__ == "__main__":
-    main()
